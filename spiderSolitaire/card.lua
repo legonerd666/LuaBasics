@@ -1,6 +1,6 @@
 local card = {
-    rank = "Ace",
-    suit = "Spades"
+    rank = "Invalid Rank",
+    suit = "Invalid Suit"
 }
 
 function card:new(rank, suit)
@@ -10,6 +10,13 @@ function card:new(rank, suit)
     newCard.rank = rank
     newCard.suit = suit
     return newCard
-end 
+end
+
+-- @param card (card(table)) The card to convert to a String
+--
+-- @return (string) Nicely formatted String of the cards values
+function card.toString(card)
+    return card.rank .. " of " .. card.suit
+end
 
 return card
