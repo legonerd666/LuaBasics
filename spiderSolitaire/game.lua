@@ -94,22 +94,50 @@ local function addCardsToPile(cardsToMove, destinationPile)
 end
 
 
+-- @param originPile (&table<&card>)
+--
+-- @return (&card) the first visible card in the stack
+local function getTopCard(originPile)
+    for i = 1, #originPile do
+        if originPile[i].isVisible then
+            return originPile[i]
+        end
+    end
+end
+
+
+-- @param card (&card)
+--
+-- @param destination (&card) the card to check against
+local function isValidMove(card, destination)
+    if Card.rankToValue(card) == Card.rankToValue(destination) - 1 then
+        return true
+    end
+    print("Invalid Move")
+    return false
+end
+
+
 
 -- @param originPile (&table<&card>) The pile to move cards from
 --
 -- @param destinationPile (&table<&card) The pile to move cards to
 local function moveVisibleCards(originPile, destinationPile)
 
-    local cardsToMove = {}
-    setCardsToMove(originPile, cardsToMove)
+    local topVisibleCard = getTopCard(originPile)
+    
+    if isValidMove(topVisibleCard, destinationPile[#destinationPile]) then
+        local cardsToMove = {}
+        setCardsToMove(originPile, cardsToMove)
         
-    -- Sets the top face down card, if there is one, to be visible in the origin pile
-    if #originPile > 0  then
-        originPile[#originPile].isVisible = true
+        -- Sets the top face down card, if there is one, to be visible in the origin pile
+        if #originPile > 0  then
+            originPile[#originPile].isVisible = true
+        end
+        
+        -- Adds the cards to move to the new pile
+        addCardsToPile(cardsToMove, destinationPile)
     end
-        
-    -- Adds the cards to move to the new pile
-    addCardsToPile(cardsToMove, destinationPile)
 
 end
 
