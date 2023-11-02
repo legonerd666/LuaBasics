@@ -11,8 +11,6 @@ local function shuffleDeck(deck)
     end
 end
 
-
-
 -- @return (number) The pile index accepting a number from 1-10
 local function pickValidPile()
     io.write("Pick a pile: ")
@@ -22,8 +20,6 @@ local function pickValidPile()
     end
     return pickValidPile()
 end
-
-
 
 -- Prints a formatted version of the card if visible
 --
@@ -36,8 +32,6 @@ local function printCard(card)
     print(Card.toString(card))
 end
 
-
-
 -- Prints out all the cards in a pile
 --
 -- @param pile (&table<&card>) The pile to print
@@ -47,21 +41,16 @@ local function printPile(pile)
     end
 end
 
-
-
 -- Prints out all the piles
 --
 -- @param piles (&table<&table<&card>>)
 local function printPiles(piles)
-
     for i = 1, #piles do
         print("Pile " .. i .. ":")
         printPile(piles[i])
         print()
     end
-
 end
-
 
 -- Takes all the visible cards from the origin pile and adds them to a list of cards to move and then removes them from the origin pile
 --
@@ -69,7 +58,6 @@ end
 --
 -- @param cardsToMove (&table<&card>) The pile of cards to be moved to the new pile
 local function setCardsToMove(originPile, cardsToMove)
-    
     for i = 1, #originPile do
         if originPile[i].isVisible then
             table.insert(cardsToMove, originPile[i])
@@ -82,8 +70,6 @@ local function setCardsToMove(originPile, cardsToMove)
     end
 end
 
-
-
 -- @param cardsToMove (&table<&card>) The list of cards that need to be moved to the destination pile
 --
 -- @param destinationPile (&table<&card>) The pile to put the card to move cards in
@@ -92,7 +78,6 @@ local function addCardsToPile(cardsToMove, destinationPile)
         table.insert(destinationPile, cardsToMove[i])
     end
 end
-
 
 -- @param originPile (&table<&card>)
 --
@@ -105,7 +90,6 @@ local function getTopCard(originPile)
     end
 end
 
-
 -- @param card (&card)
 --
 -- @param destination (&card) the card to check against
@@ -117,31 +101,25 @@ local function isValidMove(card, destination)
     return false
 end
 
-
-
 -- @param originPile (&table<&card>) The pile to move cards from
 --
 -- @param destinationPile (&table<&card) The pile to move cards to
 local function moveVisibleCards(originPile, destinationPile)
-
     local topVisibleCard = getTopCard(originPile)
-    
+
     if isValidMove(topVisibleCard, destinationPile[#destinationPile]) then
         local cardsToMove = {}
         setCardsToMove(originPile, cardsToMove)
-        
+
         -- Sets the top face down card, if there is one, to be visible in the origin pile
-        if #originPile > 0  then
+        if #originPile > 0 then
             originPile[#originPile].isVisible = true
         end
-        
+
         -- Adds the cards to move to the new pile
         addCardsToPile(cardsToMove, destinationPile)
     end
-
 end
-
-
 
 -- Runs the main game loop allowing the user to move cards between piles via the console
 --
@@ -164,7 +142,6 @@ local function gameLoop(piles, deck)
 
     moveVisibleCards(piles[activePileIndex], piles[newPileIndex])
     gameLoop(piles, deck)
-
 end
 
 -- Sets the random seed for the program, used to truly randomize the shuffle functions results
@@ -226,4 +203,3 @@ end
 -- end
 
 gameLoop(piles, deck)
-

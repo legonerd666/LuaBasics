@@ -21,8 +21,6 @@ function card.toString(card)
     return card.rank .. " of " .. card.suit
 end
 
-
-
 function card.rankToValue(card)
     local rankToValue = {
         [CONSTS.ranks[1]] = 1,
@@ -42,7 +40,4 @@ function card.rankToValue(card)
     return rankToValue[card.rank] or -1
 end
 
-
-
 return card
-
