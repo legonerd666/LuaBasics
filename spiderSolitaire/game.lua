@@ -30,6 +30,43 @@ end
 -- Shuffles the deck
 shuffleDeck(deck)
 
+-- Creates the piles of cards for the game to be played in
+local piles = {
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {},
+    {}
+}
+
+-- Deals 5 cards into each pile 1 at a time, making sure to put one into each pile before putting another into the first
+for i = 1, 5 do
+    for pile = 1, #piles do
+        table.insert(piles[pile], deck[1])
+        table.remove(deck, 1)
+    end
+end
+
+-- Deals 1 extra card into each of the first 4 piles
+for i = 1, 4 do
+    table.insert(piles[i], deck[1])
+    table.remove(deck, 1)
+end
+
+for i = 1, #piles do
+    print("Pile " .. i .. ":")
+    for pile = 1, #piles[i] do
+        print(Card.toString(piles[i][pile]))
+    end
+    print()
+end
+
+
 -- Prints out the current deck
 print("Deck:")
 for i = 1, #deck do
